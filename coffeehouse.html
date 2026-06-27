@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Чёрный Янтарь — Кофейня</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:   #0f0d0b;
+      --dark:    #1a1612;
+      --amber:   #c8832a;
+      --amber-light: #e6a84a;
+      --cream:   #f0e8d8;
+      --muted:   #8a7f72;
+      --white:   #faf7f2;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--cream);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 4rem;
+      background: linear-gradient(to bottom, rgba(15,13,11,0.95), transparent);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.15em;
+      color: var(--amber);
+      text-transform: uppercase;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+    .nav-links a:hover { opacity: 1; color: var(--amber-light); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 4rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1600&q=80');
+      background-size: cover;
+      background-position: center;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(15,13,11,1) 0%, rgba(15,13,11,0.6) 40%, rgba(15,13,11,0.3) 100%);
+    }
+    .hero-grain {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 700px; padding-bottom: 3rem; }
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--amber);
+    }
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-weight: 400;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      margin-bottom: 2rem;
+    }
+    h1 em {
+      font-style: italic;
+      color: var(--amber-light);
+    }
+    .hero-sub {
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 380px;
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--amber);
+      color: var(--black);
+      text-decoration: none;
+      padding: 1rem 2rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: background 0.2s, gap 0.2s;
+    }
+    .hero-cta:hover { background: var(--amber-light); gap: 1.4rem; }
+    .hero-cta-arrow { font-size: 1rem; }
+
+    /* HERO NAV TILES */
+    .hero-tiles {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      border-top: 1px solid rgba(200,131,42,0.25);
+      margin-top: 3rem;
+    }
+    .hero-tile {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 1.4rem 1.6rem;
+      text-decoration: none;
+      color: var(--cream);
+      border-right: 1px solid rgba(200,131,42,0.15);
+      background: rgba(15,13,11,0.7);
+      backdrop-filter: blur(8px);
+      transition: background 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-tile:last-child { border-right: none; }
+    .hero-tile::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--amber);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    .hero-tile:hover { background: rgba(200,131,42,0.1); }
+    .hero-tile:hover::before { transform: scaleX(1); }
+    .hero-tile-icon { font-size: 1.2rem; margin-bottom: 0.2rem; }
+    .hero-tile-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--amber);
+      font-weight: 500;
+    }
+    .hero-tile-desc {
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+    .hero-tile-arrow {
+      font-size: 0.8rem;
+      color: var(--amber);
+      margin-top: auto;
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .hero-tile:hover .hero-tile-arrow { opacity: 1; transform: translateX(0); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 9rem;
+      right: 4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      z-index: 2;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 50px;
+      background: linear-gradient(to bottom, var(--amber), transparent);
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+    @keyframes scrollLine {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.1); }
+    }
+
+    /* SECTION BASE */
+    section { padding: 7rem 4rem; }
+    .section-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1rem;
+    }
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      font-weight: 400;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ABOUT */
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      border-top: 1px solid rgba(200,131,42,0.2);
+    }
+    .about-visual {
+      position: relative;
+      height: 480px;
+    }
+    .about-rect {
+      position: absolute;
+      border: 1px solid rgba(200,131,42,0.3);
+    }
+    .about-rect-1 {
+      inset: 0;
+      background: linear-gradient(135deg, rgba(200,131,42,0.08), transparent);
+    }
+    .about-rect-2 {
+      top: 2rem; left: 2rem; right: -2rem; bottom: -2rem;
+      border-color: rgba(200,131,42,0.12);
+    }
+    .about-number {
+      position: absolute;
+      bottom: 3rem;
+      left: 3rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 7rem;
+      font-weight: 600;
+      color: rgba(200,131,42,0.15);
+      line-height: 1;
+      pointer-events: none;
+    }
+    .about-badge {
+      position: absolute;
+      top: 3rem;
+      right: 3rem;
+      background: var(--amber);
+      color: var(--black);
+      padding: 1.2rem;
+      text-align: center;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 500;
+      line-height: 1.5;
+    }
+    .about-text p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.9;
+      margin-bottom: 1.2rem;
+    }
+    .about-stat {
+      display: flex;
+      gap: 3rem;
+      margin-top: 2.5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    .stat-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      color: var(--amber-light);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+
+    /* MENU */
+    .menu { background: var(--dark); }
+    .menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 4rem;
+    }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(200,131,42,0.15);
+    }
+    .menu-item {
+      background: var(--dark);
+      padding: 2.5rem;
+      transition: background 0.3s;
+      cursor: default;
+    }
+    .menu-item:hover { background: rgba(200,131,42,0.06); }
+    .menu-item-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+    .menu-item-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+    }
+    .menu-item-price {
+      color: var(--amber);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+    .menu-item-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .menu-item-origin {
+      display: inline-block;
+      margin-top: 1rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--amber);
+      border: 1px solid rgba(200,131,42,0.3);
+      padding: 0.25rem 0.6rem;
+    }
+
+    /* PROCESS */
+    .process { border-top: 1px solid rgba(200,131,42,0.2); }
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+    .process-step { padding: 2rem 0; border-top: 2px solid rgba(200,131,42,0.2); }
+    .process-step.active { border-top-color: var(--amber); }
+    .process-step-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      margin-bottom: 0.8rem;
+    }
+    .process-step p { font-size: 0.82rem; color: var(--muted); line-height: 1.8; }
+
+    /* HOURS */
+    .hours {
+      background: var(--dark);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .hours-table { width: 100%; border-collapse: collapse; margin-top: 2rem; }
+    .hours-table tr { border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .hours-table tr:last-child { border-bottom: none; }
+    .hours-table td { padding: 1rem 0; font-size: 0.88rem; }
+    .hours-table td:last-child { text-align: right; color: var(--amber-light); }
+    .hours-table .day { color: var(--muted); letter-spacing: 0.05em; }
+    .hours-map {
+      height: 320px;
+      border: 1px solid rgba(200,131,42,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hours-map-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(0deg, rgba(200,131,42,0.04) 0px, transparent 1px, transparent 40px),
+        repeating-linear-gradient(90deg, rgba(200,131,42,0.04) 0px, transparent 1px, transparent 40px);
+    }
+    .hours-map-pin {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+    .pin-dot {
+      width: 14px; height: 14px;
+      background: var(--amber);
+      border-radius: 50%;
+      margin: 0 auto 1rem;
+      box-shadow: 0 0 0 6px rgba(200,131,42,0.2), 0 0 0 12px rgba(200,131,42,0.08);
+    }
+    .hours-map-pin p {
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+    .hours-map-pin strong {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--cream);
+      margin-bottom: 0.3rem;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 3rem 4rem;
+      border-top: 1px solid rgba(200,131,42,0.15);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.15em;
+      color: var(--amber);
+      text-transform: uppercase;
+    }
+    footer p { font-size: 0.75rem; color: var(--muted); }
+
+    /* GALLERY */
+    .gallery { border-top: 1px solid rgba(200,131,42,0.2); }
+    .gallery-header { margin-bottom: 3rem; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 260px 260px;
+      gap: 8px;
+    }
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      background: var(--dark);
+      cursor: pointer;
+    }
+    .gallery-item:first-child {
+      grid-row: span 2;
+    }
+    .gallery-item-inner {
+      width: 100%; height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transition: transform 0.4s ease;
+    }
+    .gallery-item:hover .gallery-item-inner { transform: scale(1.04); }
+    .gallery-bg {
+      position: absolute;
+      inset: 0;
+    }
+    .g1 { background: url('https://images.unsplash.com/photo-1600093463592-8e36ae95ef56?w=800&q=80') center/cover; }
+    .g2 { background: url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=80') center/cover; }
+    .g3 { background: url('https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=800&q=80') center/cover; }
+    .g4 { background: url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&q=80') center/cover; }
+    .g5 { background: url('https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=800&q=80') center/cover; }
+    .gallery-icon { display: none; }
+    .gallery-label {
+      position: absolute;
+      bottom: 1.2rem;
+      left: 1.2rem;
+      z-index: 2;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--amber);
+      background: rgba(15,13,11,0.7);
+      padding: 0.3rem 0.7rem;
+      backdrop-filter: blur(4px);
+    }
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(15,13,11,0.6) 0%, transparent 50%);
+      z-index: 1;
+    }
+
+    /* REVIEWS */
+    .reviews { background: var(--dark); }
+    .reviews-header { margin-bottom: 3rem; }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .review-card {
+      background: rgba(200,131,42,0.04);
+      border: 1px solid rgba(200,131,42,0.12);
+      padding: 2rem;
+      transition: border-color 0.3s;
+    }
+    .review-card:hover { border-color: rgba(200,131,42,0.3); }
+    .review-stars {
+      color: var(--amber);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+    .review-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      line-height: 1.7;
+      color: var(--cream);
+      margin-bottom: 1.5rem;
+    }
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .review-avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--amber);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--black);
+      flex-shrink: 0;
+    }
+    .review-name { font-size: 0.82rem; font-weight: 500; }
+    .review-date { font-size: 0.72rem; color: var(--muted); margin-top: 0.1rem; }
+
+    /* CONTACT */
+    .contact { border-top: 1px solid rgba(200,131,42,0.2); }
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+    .contact-info p {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.9;
+      margin-bottom: 2rem;
+    }
+    .contact-detail {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .contact-detail-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      font-size: 0.85rem;
+    }
+    .contact-detail-label {
+      color: var(--amber);
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      min-width: 70px;
+      padding-top: 0.1rem;
+    }
+    .contact-detail-value { color: var(--cream); }
+    .contact-fields { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .contact-field label {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--amber);
+    }
+    .contact-field input,
+    .contact-field textarea {
+      background: rgba(200,131,42,0.05);
+      border: 1px solid rgba(200,131,42,0.2);
+      color: var(--cream);
+      padding: 0.9rem 1rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 300;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+    .contact-field input:focus,
+    .contact-field textarea:focus { border-color: var(--amber); }
+    .contact-field textarea { resize: vertical; min-height: 120px; }
+    .contact-submit {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--amber);
+      color: var(--black);
+      border: none;
+      padding: 1rem 2rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, gap 0.2s;
+      margin-top: 0.5rem;
+    }
+    .contact-submit:hover { background: var(--amber-light); gap: 1.4rem; }
+    .contact-success {
+      display: none;
+      background: rgba(200,131,42,0.1);
+      border: 1px solid rgba(200,131,42,0.3);
+      padding: 1rem 1.5rem;
+      font-size: 0.85rem;
+      color: var(--amber-light);
+      margin-top: 1rem;
+    }
+
+    
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { padding: 0 1.5rem 0; }
+      .hero-tiles { grid-template-columns: 1fr 1fr; }
+      .hero-tiles a:last-child { grid-column: span 1; }
+      section { padding: 5rem 1.5rem; }
+      .about { grid-template-columns: 1fr; gap: 3rem; }
+      .about-visual { height: 280px; }
+      .menu-grid { grid-template-columns: 1fr; }
+      .menu-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .process-steps { grid-template-columns: 1fr 1fr; }
+      .hours { grid-template-columns: 1fr; gap: 3rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+      .hero-scroll { display: none; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 180px 180px 180px; }
+      .gallery-item:first-child { grid-row: span 1; }
+      .reviews-grid { grid-template-columns: 1fr; }
+      .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">Чёрный Янтарь</div>
+    <ul class="nav-links">
+      <li><a href="#about">О нас</a></li>
+      <li><a href="#menu">Меню</a></li>
+      <li><a href="#gallery">Интерьер</a></li>
+      <li><a href="#reviews">Отзывы</a></li>
+      <li><a href="#hours">Адрес</a></li>
+      <li><a href="#contact">Связь</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grain"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Specialty Coffee · Москва</div>
+      <h1>Кофе,<br>который<br><em>помнят</em></h1>
+      <p class="hero-sub">Зёрна из Эфиопии, Колумбии и Кении. Обжарка раз в неделю. Каждая чашка — осознанно.</p>
+      <a href="#menu" class="hero-cta">Смотреть меню <span class="hero-cta-arrow">→</span></a>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+    <div class="hero-tiles">
+      <a href="#about" class="hero-tile">
+        <div class="hero-tile-icon">☕</div>
+        <div class="hero-tile-label">О нас</div>
+        <div class="hero-tile-desc">История и команда</div>
+        <div class="hero-tile-arrow">→</div>
+      </a>
+      <a href="#gallery" class="hero-tile">
+        <div class="hero-tile-icon">🖼</div>
+        <div class="hero-tile-label">Интерьер</div>
+        <div class="hero-tile-desc">Атмосфера места</div>
+        <div class="hero-tile-arrow">→</div>
+      </a>
+      <a href="#reviews" class="hero-tile">
+        <div class="hero-tile-icon">★</div>
+        <div class="hero-tile-label">Отзывы</div>
+        <div class="hero-tile-desc">Что говорят гости</div>
+        <div class="hero-tile-arrow">→</div>
+      </a>
+      <a href="#contact" class="hero-tile">
+        <div class="hero-tile-icon">✉</div>
+        <div class="hero-tile-label">Связь</div>
+        <div class="hero-tile-desc">Написать нам</div>
+        <div class="hero-tile-arrow">→</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="about-visual">
+      <div class="about-rect about-rect-1"></div>
+      <div class="about-rect about-rect-2"></div>
+      <div class="about-number">07</div>
+      <div class="about-badge">Specialty<br>Grade<br>87+</div>
+    </div>
+    <div class="about-text">
+      <div class="section-label">О кофейне</div>
+      <h2>Семь лет в поиске идеальной чашки</h2>
+      <p>Мы начали в 2018 году с маленькой обжарочной в Москве. С тех пор объездили более 20 ферм в трёх континентах — чтобы привозить вам зерно с историей, а не просто с этикеткой.</p>
+      <p>Наш бариста Алекс трижды финалист Чемпионата России по бариста. Но главное — он умеет объяснить вкус кофе на человеческом языке.</p>
+      <div class="about-stat">
+        <div>
+          <div class="stat-value">23</div>
+          <div class="stat-label">фермы-партнёра</div>
+        </div>
+        <div>
+          <div class="stat-value">6</div>
+          <div class="stat-label">сортов в обжарке</div>
+        </div>
+        <div>
+          <div class="stat-value">7</div>
+          <div class="stat-label">лет опыта</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section class="menu" id="menu">
+    <div class="menu-header">
+      <div>
+        <div class="section-label">Напитки</div>
+        <h2>Меню</h2>
+      </div>
+      <p style="color:var(--muted);font-size:0.82rem;max-width:220px;text-align:right">Молоко: цельное, овсяное, миндальное — по выбору</p>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div class="menu-item-top">
+          <div class="menu-item-name">Эспрессо</div>
+          <div class="menu-item-price">220 ₽</div>
+        </div>
+        <div class="menu-item-desc">Концентрированный, с плотной крема. Основа всего остального.</div>
+        <span class="menu-item-origin">Колумбия · Уила</span>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-top">
+          <div class="menu-item-name">Флэт Уайт</div>
+          <div class="menu-item-price">320 ₽</div>
+        </div>
+        <div class="menu-item-desc">Двойной эспрессо и нежное молоко. Меньше, чем латте — но насыщеннее.</div>
+        <span class="menu-item-origin">Эфиопия · Иргачефф</span>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-top">
+          <div class="menu-item-name">Фильтр</div>
+          <div class="menu-item-price">280 ₽</div>
+        </div>
+        <div class="menu-item-desc">Заваривается вручную. Раскрывает чайные и цветочные ноты зерна.</div>
+        <span class="menu-item-origin">Кения · Кирinyaga</span>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-top">
+          <div class="menu-item-name">Капучино</div>
+          <div class="menu-item-price">300 ₽</div>
+        </div>
+        <div class="menu-item-desc">Классика. Равные доли эспрессо, молока и пены.</div>
+        <span class="menu-item-origin">Колумбия · Нариньо</span>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-top">
+          <div class="menu-item-name">Колд Брю</div>
+          <div class="menu-item-price">350 ₽</div>
+        </div>
+        <div class="menu-item-desc">Заварка 18 часов холодным способом. Мягко, без кислинки, долго.</div>
+        <span class="menu-item-origin">Бразилия · Серрадо</span>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-top">
+          <div class="menu-item-name">Раф</div>
+          <div class="menu-item-price">360 ₽</div>
+        </div>
+        <div class="menu-item-desc">Эспрессо, сливки и ваниль — взбитые вместе. Наш фирменный.</div>
+        <span class="menu-item-origin">Эфиопия · Гуджи</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="process" id="process">
+    <div class="section-label">Путь зерна</div>
+    <h2>От фермы до чашки</h2>
+    <div class="process-steps">
+      <div class="process-step active">
+        <div class="process-step-title">Отбор</div>
+        <p>Едем на фермы лично. Пробуем зелёное зерно, смотрим условия обработки. Берём только то, что проходит наш каппинг.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-step-title">Обжарка</div>
+        <p>Каждую пятницу. Малыми партиями, на барабанной машине. Профиль обжарки для каждого сорта — свой.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-step-title">Отдых</div>
+        <p>После обжарки зерно «отдыхает» 5–10 дней. За это время раскрываются ноты, которые мы в нём нашли.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-step-title">Чашка</div>
+        <p>Свежее зерно, отдохнувшее и готовое. Бариста знает его историю и расскажет вам, что вы пьёте.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOURS -->
+  <section class="hours" id="hours">
+    <div>
+      <div class="section-label">Адрес и часы</div>
+      <h2>Приходите в любой день</h2>
+      <table class="hours-table">
+        <tr>
+          <td class="day">Понедельник — пятница</td>
+          <td>08:00 — 22:00</td>
+        </tr>
+        <tr>
+          <td class="day">Суббота</td>
+          <td>09:00 — 23:00</td>
+        </tr>
+        <tr>
+          <td class="day">Воскресенье</td>
+          <td>10:00 — 21:00</td>
+        </tr>
+      </table>
+      <p style="margin-top:2rem;font-size:0.82rem;color:var(--muted)">ул. Покровка, 12, Москва<br>м. Чистые пруды · 5 минут пешком</p>
+    </div>
+    <div class="hours-map">
+      <div class="hours-map-bg"></div>
+      <div class="hours-map-pin">
+        <div class="pin-dot"></div>
+        <strong>Чёрный Янтарь</strong>
+        <p>ул. Покровка, 12</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery" id="gallery">
+    <div class="gallery-header">
+      <div class="section-label">Атмосфера</div>
+      <h2>Интерьер кофейни</h2>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <div class="gallery-item-inner">
+          <div class="gallery-bg g1"></div>
+          <div class="gallery-overlay"></div>
+        </div>
+        <div class="gallery-label">Главный зал</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-item-inner">
+          <div class="gallery-bg g2"></div>
+          <div class="gallery-overlay"></div>
+        </div>
+        <div class="gallery-label">Барная стойка</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-item-inner">
+          <div class="gallery-bg g3"></div>
+          <div class="gallery-overlay"></div>
+        </div>
+        <div class="gallery-label">Летняя терраса</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-item-inner">
+          <div class="gallery-bg g4"></div>
+          <div class="gallery-overlay"></div>
+        </div>
+        <div class="gallery-label">Уютный уголок</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-item-inner">
+          <div class="gallery-bg g5"></div>
+          <div class="gallery-overlay"></div>
+        </div>
+        <div class="gallery-label">Вечернее освещение</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="reviews" id="reviews">
+    <div class="reviews-header">
+      <div class="section-label">Отзывы</div>
+      <h2>Что говорят гости</h2>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">«Лучший фильтр-кофе в Москве. Бариста объяснил откуда зерно и как его обжарили — я впервые понял, что именно пью.»</div>
+        <div class="review-author">
+          <div class="review-avatar">АК</div>
+          <div>
+            <div class="review-name">Александр К.</div>
+            <div class="review-date">Май 2025 · Google</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">«Интерьер как будто из кино — тёмный, тёплый, уютный. Прихожу сюда работать каждую неделю. Раф просто нереальный.»</div>
+        <div class="review-author">
+          <div class="review-avatar">МС</div>
+          <div>
+            <div class="review-name">Мария С.</div>
+            <div class="review-date">Апрель 2025 · Яндекс</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">«Нашёл это место случайно, теперь хожу постоянно. Колд брю здесь — отдельная история. Персонал всегда приветливый.»</div>
+        <div class="review-author">
+          <div class="review-avatar">ДВ</div>
+          <div>
+            <div class="review-name">Дмитрий В.</div>
+            <div class="review-date">Март 2025 · 2GIS</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="contact-inner">
+      <div class="contact-info">
+        <div class="section-label">Обратная связь</div>
+        <h2>Напишите нам</h2>
+        <p>Есть вопрос, хотите забронировать зал для мероприятия или просто поделиться впечатлением — мы читаем каждое сообщение.</p>
+        <div class="contact-detail">
+          <div class="contact-detail-item">
+            <span class="contact-detail-label">Телефон</span>
+            <span class="contact-detail-value">+7 (495) 123-45-67</span>
+          </div>
+          <div class="contact-detail-item">
+            <span class="contact-detail-label">Email</span>
+            <span class="contact-detail-value">hello@chernyyantar.ru</span>
+          </div>
+          <div class="contact-detail-item">
+            <span class="contact-detail-label">Telegram</span>
+            <span class="contact-detail-value">@chernyyantar</span>
+          </div>
+          <div class="contact-detail-item">
+            <span class="contact-detail-label">Адрес</span>
+            <span class="contact-detail-value">ул. Покровка, 12, Москва</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="contact-fields">
+          <div class="contact-field">
+            <label>Ваше имя</label>
+            <input type="text" id="cf-name" placeholder="Как вас зовут?" />
+          </div>
+          <div class="contact-field">
+            <label>Телефон или Email</label>
+            <input type="text" id="cf-contact" placeholder="+7 или email" />
+          </div>
+          <div class="contact-field">
+            <label>Сообщение</label>
+            <textarea id="cf-message" placeholder="Напишите что хотели..."></textarea>
+          </div>
+          <button class="contact-submit" onclick="submitForm()">Отправить <span>→</span></button>
+          <div class="contact-success" id="contact-success">
+            ✓ Сообщение отправлено — ответим в течение часа
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Чёрный Янтарь</div>
+    <p>© 2025 · Specialty Coffee · Москва</p>
+    <p style="color:var(--muted);font-size:0.72rem">Instagram · Telegram</p>
+  </footer>
+
+<script>
+  function submitForm() {
+    const name = document.getElementById('cf-name').value.trim();
+    const contact = document.getElementById('cf-contact').value.trim();
+    const message = document.getElementById('cf-message').value.trim();
+    if (!name || !contact || !message) {
+      alert('Пожалуйста, заполните все поля');
+      return;
+    }
+    document.getElementById('contact-success').style.display = 'block';
+    document.getElementById('cf-name').value = '';
+    document.getElementById('cf-contact').value = '';
+    document.getElementById('cf-message').value = '';
+  }
+</script>
+</body>
+</html>
